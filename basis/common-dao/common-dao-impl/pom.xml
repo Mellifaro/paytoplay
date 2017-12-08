@@ -11,5 +11,13 @@
 
     <artifactId>common-dao-impl</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.paytoplay</groupId>
+            <artifactId>common-dao-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
