@@ -21,6 +21,9 @@
         <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
         <guava.version>23.0</guava.version>
         <junit.version>4.12</junit.version>
+
+        <!--Hibernate-->
+        <hibernate.validator.version>6.0.5.Final</hibernate.validator.version>
     </properties>
 
     <dependencies>
@@ -28,6 +31,13 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>23.0</version>
+        </dependency>
+
+        <!--Hibernate-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.validator.version}</version>
         </dependency>
 
         <!--Test-->

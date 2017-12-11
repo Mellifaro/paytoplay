@@ -2,9 +2,16 @@ package com.paytoplay.entities;
 
 import java.io.Serializable;
 
+/**
+ * Base class for all business entities
+ * @author v.skapoushchenko
+ */
 public class BaseEntity implements Serializable{
     public static final int START_SEQ = 100000;
 
+    /**
+     * Unique entity identifier
+     */
     protected Long id;
 
     public BaseEntity() {
