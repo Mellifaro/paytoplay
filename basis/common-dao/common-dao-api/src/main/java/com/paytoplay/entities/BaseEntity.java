@@ -16,7 +16,8 @@ public class BaseEntity implements Serializable{
      * Unique entity identifier
      */
     @Id
-    @Column(name = "id")
+//    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     protected Long id;
 
     public BaseEntity() {
