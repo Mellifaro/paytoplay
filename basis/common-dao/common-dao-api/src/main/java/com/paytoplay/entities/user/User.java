@@ -1,12 +1,13 @@
 package com.paytoplay.entities.user;
 
+
 import com.paytoplay.entities.NamedEntity;
 import com.paytoplay.utils.CommonUtil;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -18,25 +19,25 @@ import java.util.*;
 @Table(name = "users")
 public class User extends NamedEntity {
 
-    @NotEmpty
+    @NotBlank(message = "Incorrect first name")
     @Column(name = "first_name")
     private String firstName;
 
-    @NotEmpty
+    @NotBlank(message = "Incorrect last name")
     @Column(name = "last_name")
     private String lastName;
 
-    @NotEmpty
+    @NotBlank(message = "Phone can't be blank")
+    @Size(min = 2, max = 15, message = "Phone length can't be less than 2 or more than 15 characters")
     @Column(name = "phone")
     private String phone;
 
-    @NotEmpty
-    @Email
+    @NotBlank(message = "Email can't be blank")
+    @Email(message = "Email is not valid")
     @Column(name = "email")
     private String email;
 
-    @NotEmpty
-    @Length(min = 5)
+    @NotBlank(message = "Password can't be blank")
     @Column(name = "password")
     //TODO create hash for passwords
     private String password;
@@ -48,10 +49,10 @@ public class User extends NamedEntity {
     private LocalDateTime updatedTime;
 
     @Column(name = "enabled_buy")
-    private boolean isEnabledToBuy;
+    private boolean enabledToBuy;
 
     @Column(name = "enabled_sell")
-    private boolean isEnabledToSell;
+    private boolean enabledToSell;
 
     /**
      * Set of roles linked to this user
@@ -63,11 +64,19 @@ public class User extends NamedEntity {
     private Set<UserRole> roles;
 
     //TODO Default constructor
-    public User(){}
 
-    public User(String name, Set<UserRole> roles){
-        super(null, name);
+    public User(String login, String firstName, String lastName, String phone, String email, String password, Set<UserRole> roles){
+        super(null, login);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
         this.roles = roles;
+        this.createdTime = LocalDateTime.now();
+        this.updatedTime = LocalDateTime.now();
+        this.enabledToBuy = true;
+        this.enabledToSell = true;
     }
 
     public Set<UserRole> getRoles() {
@@ -75,7 +84,7 @@ public class User extends NamedEntity {
     }
 
     public void setRoles(Set<UserRole> roles) {
-        Objects.requireNonNull(roles, "Roles parameter is not initialized");
+        Objects.requireNonNull(roles, "Set of roles can't be null");
         this.roles = roles;
     }
 
@@ -119,6 +128,34 @@ public class User extends NamedEntity {
         this.password = password;
     }
 
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public LocalDateTime getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(LocalDateTime updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public boolean isEnabledToBuy() {
+        return enabledToBuy;
+    }
+
+    public void setEnabledToBuy(boolean enabledToBuy) {
+        this.enabledToBuy = enabledToBuy;
+    }
+
+    public boolean isEnabledToSell() {
+        return enabledToSell;
+    }
+
+    public void setEnabledToSell(boolean enabledToSell) {
+        this.enabledToSell = enabledToSell;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -129,8 +166,8 @@ public class User extends NamedEntity {
                 ", email='" + email + '\'' +
                 ", createdDate=" + createdTime +
                 ", updatedTime=" + updatedTime +
-                ", isEnabledToBuy=" + isEnabledToBuy +
-                ", isEnabledToSell=" + isEnabledToSell +
+                ", enabledToBuy=" + enabledToBuy +
+                ", enabledToSell=" + enabledToSell +
                 ", roles=" + roles +
                 '}';
     }
