@@ -22,10 +22,10 @@ public class UserRepositoryTest {
     @Test
     public void startupTest(){
         User user = new User("mellifaro", "Ivan", "Zubko", "+380634465555", "zubko@gmail.com", "12345", EnumSet.of(UserRole.ADMIN));
-        user.setId(56526525L);
+//        user.setId(56526525L);
         user.setFirstName("Ivan");
         user.setLastName("Zubko");
-        user.setEmail("");
+        user.setEmail("zubko@gmail.com");
         user.setPhone("+380634456655");
         user.setPassword("default");
         userRepository.save(user);

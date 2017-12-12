@@ -1,4 +1,4 @@
-package com.paytoplay.repository;
+package com.paytoplay.entities;
 
 import com.paytoplay.entities.user.User;
 import com.paytoplay.entities.user.UserRole;
