@@ -1,6 +1,5 @@
 package com.paytoplay.entities;
 
-import com.google.common.base.Preconditions;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
@@ -15,7 +14,7 @@ public class NamedEntity extends BaseEntity{
 
     @NotEmpty
     @Column(name = "name", nullable = false)
-    private String name;
+    protected String name;
 
     public NamedEntity(){}
 
