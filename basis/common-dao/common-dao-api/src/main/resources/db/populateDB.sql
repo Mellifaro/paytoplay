@@ -1,4 +1,5 @@
 DELETE FROM user_roles;
+DELETE FROM user_update_data;
 DELETE FROM users;
 
 INSERT INTO users(name, first_name, last_name, phone, email, password)
@@ -13,3 +14,8 @@ INSERT INTO user_roles(user_id, role)
            (101, 'SELLER'),
            (101, 'BUYER'),
            (102, 'BUYER');
+
+INSERT INTO user_update_data(phone, email, password, user_id)
+    VALUES ('+777777777', null, 'admin123_password', 100),
+           ('+888888888', 'admin1238@gmail.com', 'admin1238_password', 100),
+           ('+3806744033442', NULL , 'seller_password2', 101);

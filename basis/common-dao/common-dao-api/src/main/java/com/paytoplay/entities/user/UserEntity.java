@@ -12,12 +12,13 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 /**
- * Entity, that contains all user's information
+ * Entity, that contains all user information
  * @author v.skapoushchenko
  */
 @Entity
 @Table(name = "users")
-public class User extends NamedEntity {
+public class UserEntity extends NamedEntity {
+    public static final int USER_SEQ = 100;
 
     @NotBlank(message = "Incorrect first name")
     @Column(name = "first_name")
@@ -61,11 +62,26 @@ public class User extends NamedEntity {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.LAZY)
-    private Set<UserRole> roles;
+    private Set<UserRoleEntity> roles;
 
     //TODO Default constructor
+    public UserEntity(){}
 
-    public User(String login, String firstName, String lastName, String phone, String email, String password, Set<UserRole> roles){
+    public UserEntity(Long id, String login, String firstName, String lastName, String phone, String email, String password, Set<UserRoleEntity> roles){
+        super(id, login);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.createdTime = LocalDateTime.now();
+        this.updatedTime = LocalDateTime.now();
+        this.enabledToBuy = true;
+        this.enabledToSell = true;
+    }
+
+    public UserEntity(String login, String firstName, String lastName, String phone, String email, String password, Set<UserRoleEntity> roles){
         super(null, login);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -79,11 +95,11 @@ public class User extends NamedEntity {
         this.enabledToSell = true;
     }
 
-    public Set<UserRole> getRoles() {
+    public Set<UserRoleEntity> getRoles() {
         return CommonUtil.getSafeSet(roles);
     }
 
-    public void setRoles(Set<UserRole> roles) {
+    public void setRoles(Set<UserRoleEntity> roles) {
         Objects.requireNonNull(roles, "Set of roles can't be null");
         this.roles = roles;
     }
@@ -158,7 +174,7 @@ public class User extends NamedEntity {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserEntity{" +
                 ", id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

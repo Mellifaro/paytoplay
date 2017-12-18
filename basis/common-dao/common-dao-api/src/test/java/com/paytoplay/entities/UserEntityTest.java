@@ -1,7 +1,7 @@
 package com.paytoplay.entities;
 
-import com.paytoplay.entities.user.User;
-import com.paytoplay.entities.user.UserRole;
+import com.paytoplay.entities.user.UserEntity;
+import com.paytoplay.entities.user.UserRoleEntity;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,11 +16,11 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 /**
- * Contains unit-tests to check functionality of {@link User} class
+ * Contains unit-tests to check functionality of {@link UserEntity} class
  * @author v.skapoushchenko
  */
-public class UserTest {
-    private User user;
+public class UserEntityTest {
+    private UserEntity userEntity;
     private static Validator validator;
 
     @BeforeClass
@@ -31,36 +31,36 @@ public class UserTest {
 
     @Before
     public void setup(){
-        user = new User("mellifaro", "Ivan", "Zubko", "+380634465555", "zubko@gmail.com", "12345", EnumSet.of(UserRole.ADMIN));
+        userEntity = new UserEntity("mellifaro", "Ivan", "Zubko", "+380634465555", "zubko@gmail.com", "12345", EnumSet.of(UserRoleEntity.ADMIN));
     }
 
     @Test
     public void testCreateValidUser(){
-        user = new User("mellifaro", "Ivan", "Zubko", "+380634465555", "zubko@gmail.com", "12345", EnumSet.of(UserRole.ADMIN));
-        Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+        userEntity = new UserEntity("mellifaro", "Ivan", "Zubko", "+380634465555", "zubko@gmail.com", "12345", EnumSet.of(UserRoleEntity.ADMIN));
+        Set<ConstraintViolation<UserEntity>> constraintViolations = validator.validate(userEntity);
         assertTrue(constraintViolations.isEmpty());
     }
 
     @Test
     public void testAddValidRolesSuccess(){
-        user.setRoles(EnumSet.of(UserRole.ADMIN));
-        assertTrue(containsRole(user, UserRole.ADMIN));
+        userEntity.setRoles(EnumSet.of(UserRoleEntity.ADMIN));
+        assertTrue(containsRole(userEntity, UserRoleEntity.ADMIN));
     }
 
-    private boolean containsRole(User user, UserRole role){
-        return user.getRoles().contains(role);
+    private boolean containsRole(UserEntity userEntity, UserRoleEntity role){
+        return userEntity.getRoles().contains(role);
     }
 
     @Test(expected = NullPointerException.class)
     public void testAddNullSetRolesFailure(){
-        user.setRoles(null);
+        userEntity.setRoles(null);
         assertTrue(false);
     }
 
     @Test
     public void testAddNullFirstNameFailure(){
-        user.setFirstName(null);
-        Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+        userEntity.setFirstName(null);
+        Set<ConstraintViolation<UserEntity>> constraintViolations = validator.validate(userEntity);
 
         //Returns true if one of the violation constraints has such message
         assertTrue(constraintViolations.stream()
@@ -69,8 +69,8 @@ public class UserTest {
 
     @Test
     public void testAddEmptyFirstNameFailure(){
-        user.setFirstName("   ");
-        Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+        userEntity.setFirstName("   ");
+        Set<ConstraintViolation<UserEntity>> constraintViolations = validator.validate(userEntity);
 
         //Returns true if one of the violation constraints has such message
         assertTrue(constraintViolations.stream()
@@ -79,8 +79,8 @@ public class UserTest {
 
     @Test
     public void testAddNullLastNameFailure(){
-        user.setLastName(null);
-        Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+        userEntity.setLastName(null);
+        Set<ConstraintViolation<UserEntity>> constraintViolations = validator.validate(userEntity);
 
         //Returns true if one of the violation constraints has such message
         assertTrue(constraintViolations.stream()
@@ -89,8 +89,8 @@ public class UserTest {
 
     @Test
     public void testAddEmptyLastNameFailure(){
-        user.setLastName("   ");
-        Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+        userEntity.setLastName("   ");
+        Set<ConstraintViolation<UserEntity>> constraintViolations = validator.validate(userEntity);
 
         //Returns true if one of the violation constraints has such message
         assertTrue(constraintViolations.stream()
@@ -99,8 +99,8 @@ public class UserTest {
 
     @Test
     public void testAddNullPhoneFailure(){
-        user.setPhone(null);
-        Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+        userEntity.setPhone(null);
+        Set<ConstraintViolation<UserEntity>> constraintViolations = validator.validate(userEntity);
 
         //Returns true if one of the violation constraints has such message
         assertTrue(constraintViolations.stream()
@@ -109,8 +109,8 @@ public class UserTest {
 
     @Test
     public void testAddEmptyPhoneFailure(){
-        user.setPhone("   ");
-        Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+        userEntity.setPhone("   ");
+        Set<ConstraintViolation<UserEntity>> constraintViolations = validator.validate(userEntity);
 
         //Returns true if one of the violation constraints has such message
         assertTrue(constraintViolations.stream()
@@ -119,8 +119,8 @@ public class UserTest {
 
     @Test
     public void testAddNullEmailFailure(){
-        user.setEmail(null);
-        Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+        userEntity.setEmail(null);
+        Set<ConstraintViolation<UserEntity>> constraintViolations = validator.validate(userEntity);
 
         //Returns true if one of the violation constraints has such message
         assertTrue(constraintViolations.stream()
@@ -129,8 +129,8 @@ public class UserTest {
 
     @Test
     public void testAddEmptyEmailFailure(){
-        user.setEmail("   ");
-        Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+        userEntity.setEmail("   ");
+        Set<ConstraintViolation<UserEntity>> constraintViolations = validator.validate(userEntity);
 
         //Returns true if one of the violation constraints has such message
         assertTrue(constraintViolations.stream()
@@ -139,8 +139,8 @@ public class UserTest {
 
     @Test
     public void testAddNotValidEmailFailure(){
-        user.setEmail("wrongemail");
-        Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+        userEntity.setEmail("wrongemail");
+        Set<ConstraintViolation<UserEntity>> constraintViolations = validator.validate(userEntity);
 
         //Returns true if one of the violation constraints has such message
         assertTrue(constraintViolations.stream()
@@ -149,8 +149,8 @@ public class UserTest {
 
     @Test
     public void testAddNullPasswordFailure(){
-        user.setPassword(null);
-        Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+        userEntity.setPassword(null);
+        Set<ConstraintViolation<UserEntity>> constraintViolations = validator.validate(userEntity);
 
         //Returns true if one of the violation constraints has such message
         assertTrue(constraintViolations.stream()
@@ -159,8 +159,8 @@ public class UserTest {
 
     @Test
     public void testAddEmptyPasswordFailure(){
-        user.setPassword("   ");
-        Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+        userEntity.setPassword("   ");
+        Set<ConstraintViolation<UserEntity>> constraintViolations = validator.validate(userEntity);
 
         //Returns true if one of the violation constraints has such message
         assertTrue(constraintViolations.stream()

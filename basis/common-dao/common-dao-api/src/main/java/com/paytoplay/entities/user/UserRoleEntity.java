@@ -1,6 +1,6 @@
 package com.paytoplay.entities.user;
 
-public enum  UserRole {
+public enum UserRoleEntity {
     ADMIN,
     SELLER,
     BUYER
