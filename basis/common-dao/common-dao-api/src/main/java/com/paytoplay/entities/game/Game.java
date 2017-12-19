@@ -13,7 +13,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "games")
-public class GameEntity extends NamedEntity{
+public class Game extends NamedEntity{
     public static final int GAME_SEQ = 100;
 
     @Column(name = "imageURL")
@@ -22,7 +22,7 @@ public class GameEntity extends NamedEntity{
     @Column(name = "description")
     private String description;
 
-    public GameEntity(){}
+    public Game(){}
 
     public String getImageURL() {
         return imageURL;
@@ -42,7 +42,7 @@ public class GameEntity extends NamedEntity{
 
     @Override
     public String toString() {
-        return "GameEntity{" +
+        return "Game{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", imageURL='" + imageURL + '\'' +

@@ -1,8 +1,8 @@
 package com.paytoplay.entities;
 
-import com.paytoplay.entities.user.UserEntity;
-import com.paytoplay.entities.user.UserRoleEntity;
-import com.paytoplay.entities.user.UserUpdateDataEntity;
+import com.paytoplay.entities.user.User;
+import com.paytoplay.entities.user.UserRole;
+import com.paytoplay.entities.user.UserUpdateData;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,14 +20,14 @@ import static com.paytoplay.testdata.UserTestData.SELLER_DATA_UPDATED_ID_1;
 import static org.junit.Assert.*;
 
 /**
- * Contains unit-tests to check functionality of {@link UserUpdateDataEntity} class
+ * Contains unit-tests to check functionality of {@link UserUpdateData} class
  * @author v.skapoushchenko
  */
-public class UserUpdateDataEntityTest {
+public class UserUpdateDataTest {
 
-    private UserEntity admin;
-    private UserUpdateDataEntity adminUpdatedData;
-    private UserUpdateDataEntity sellerUpdatedData;
+    private User admin;
+    private UserUpdateData adminUpdatedData;
+    private UserUpdateData sellerUpdatedData;
     private static Validator validator;
 
     @BeforeClass
@@ -38,25 +38,25 @@ public class UserUpdateDataEntityTest {
 
     @Before
     public void setup(){
-        admin = new UserEntity(null, "admin", "Jon", "Snow", "+380634401122", "admin@gmail.com", "admin_password", EnumSet.of(UserRoleEntity.ADMIN));
-        sellerUpdatedData = new UserUpdateDataEntity(SELLER_DATA_UPDATED_ID_1, "+3806744033442", null, "seller_password2", LocalDateTime.now(), SELLER);
+        admin = new User(null, "admin", "Jon", "Snow", "+380634401122", "admin@gmail.com", "admin_password", EnumSet.of(UserRole.ADMIN));
+        sellerUpdatedData = new UserUpdateData(SELLER_DATA_UPDATED_ID_1, "+3806744033442", null, "seller_password2", LocalDateTime.now(), SELLER);
     }
 
     @Test
     public void testUpdatedWithConstructorSuccess(){
-        adminUpdatedData = new UserUpdateDataEntity(admin);
+        adminUpdatedData = new UserUpdateData(admin);
         assertTrue(adminUpdatedData.getId() == null);
         assertTrue(adminUpdatedData.getUpdatedDate() != null);
         assertTrue(adminUpdatedData.getEmail().equals(admin.getEmail()));
         assertTrue(adminUpdatedData.getPhone().equals(admin.getPhone()));
         assertTrue(adminUpdatedData.getPassword().equals(admin.getPassword()));
-        assertTrue(adminUpdatedData.getUserEntity().equals(admin));
+        assertTrue(adminUpdatedData.getUser().equals(admin));
     }
 
     @Test
     public void testAddNullUserEntityFailure(){
-        sellerUpdatedData.setUserEntity(null);
-        Set<ConstraintViolation<UserUpdateDataEntity>> constraintViolations = validator.validate(sellerUpdatedData);
+        sellerUpdatedData.setUser(null);
+        Set<ConstraintViolation<UserUpdateData>> constraintViolations = validator.validate(sellerUpdatedData);
 
         //Returns true if one of the violation constraints has such message
         assertTrue(constraintViolations.stream()

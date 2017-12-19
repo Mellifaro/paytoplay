@@ -17,7 +17,7 @@ import java.util.*;
  */
 @Entity
 @Table(name = "users")
-public class UserEntity extends NamedEntity {
+public class User extends NamedEntity {
     public static final int USER_SEQ = 100;
 
     @NotBlank(message = "Incorrect first name")
@@ -62,12 +62,12 @@ public class UserEntity extends NamedEntity {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.LAZY)
-    private Set<UserRoleEntity> roles;
+    private Set<UserRole> roles;
 
     //TODO Default constructor
-    public UserEntity(){}
+    public User(){}
 
-    public UserEntity(Long id, String login, String firstName, String lastName, String phone, String email, String password, Set<UserRoleEntity> roles){
+    public User(Long id, String login, String firstName, String lastName, String phone, String email, String password, Set<UserRole> roles){
         super(id, login);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -81,7 +81,7 @@ public class UserEntity extends NamedEntity {
         this.enabledToSell = true;
     }
 
-    public UserEntity(String login, String firstName, String lastName, String phone, String email, String password, Set<UserRoleEntity> roles){
+    public User(String login, String firstName, String lastName, String phone, String email, String password, Set<UserRole> roles){
         super(null, login);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -95,11 +95,11 @@ public class UserEntity extends NamedEntity {
         this.enabledToSell = true;
     }
 
-    public Set<UserRoleEntity> getRoles() {
+    public Set<UserRole> getRoles() {
         return CommonUtil.getSafeSet(roles);
     }
 
-    public void setRoles(Set<UserRoleEntity> roles) {
+    public void setRoles(Set<UserRole> roles) {
         Objects.requireNonNull(roles, "Set of roles can't be null");
         this.roles = roles;
     }
@@ -174,7 +174,7 @@ public class UserEntity extends NamedEntity {
 
     @Override
     public String toString() {
-        return "UserEntity{" +
+        return "User{" +
                 ", id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

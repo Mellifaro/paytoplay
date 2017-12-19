@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "server_types")
-public class ServerTypeEntity extends BaseEntity{
+public class ServerType extends BaseEntity{
     public static final int SERVER_TYPE_SEQ = 100;
 
     @Column(name = "server_type")
@@ -32,7 +32,7 @@ public class ServerTypeEntity extends BaseEntity{
 
     @Override
     public String toString() {
-        return "ServerTypeEntity{" +
+        return "ServerType{" +
                 "id=" + id +
                 ", serverType='" + serverType + '\'' +
                 '}';

@@ -5,7 +5,6 @@ import com.paytoplay.utils.CommonUtil;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,42 +14,41 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "servers")
-public class ServerEntity extends NamedEntity{
+public class Server extends NamedEntity{
     public static final int SERVER_SEQ = 100;
 
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "server_serverTypes",
-            joinColumns = @JoinColumn("server_id"),
-            inverseJoinColumns = @JoinColumn("server_type_id")
+            name = "server_servertypes",
+            joinColumns = @JoinColumn(name = "server_id"),
+            inverseJoinColumns = @JoinColumn(name = "server_type_id")
     )
     @NotNull(message = "Set of server type can't be null. Use empty set instead")
-    private Set<ServerTypeEntity> setOfServerTypes;
+    private Set<ServerType> setOfServerTypes;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "game_id")
     @NotNull(message = "Game can't be null")
-    private GameEntity gameEntity;
+    private Game game;
 
-    public ServerEntity(){
-        super();
-        this.setOfServerTypes = Collections.emptySet();
-    }
+    public Server(){}
 
-    public ServerEntity(String name, Set<ServerTypeEntity> setOfServerTypes, GameEntity gameEntity){
+    public Server(String name, Set<ServerType> setOfServerTypes, Game game){
         super(null, name);
         Objects.requireNonNull(name, "Name can't be null or empty");
+        Objects.requireNonNull(setOfServerTypes, "Set of server types can't be null");
+        Objects.requireNonNull(setOfServerTypes, "Game can not be null. Server can't exist without game");
         this.setOfServerTypes = setOfServerTypes;
-        this.gameEntity = gameEntity;
+        this.game = game;
     }
 
     /**
      * @return unmodifiable set of server types
      */
-    public Set<ServerTypeEntity> getSetOfServerTypes() {
+    public Set<ServerType> getSetOfServerTypes() {
         return CommonUtil.getSafeSet(setOfServerTypes);
     }
 
@@ -58,7 +56,7 @@ public class ServerEntity extends NamedEntity{
      * @param setOfServerTypes
      * @throws NullPointerException if {@code setOfServerTypes} is null
      */
-    public void setSetOfServerTypes(Set<ServerTypeEntity> setOfServerTypes) {
+    public void setSetOfServerTypes(Set<ServerType> setOfServerTypes) {
         Objects.requireNonNull(setOfServerTypes, "Set of server types can't be null");
         this.setOfServerTypes = setOfServerTypes;
     }
@@ -71,27 +69,27 @@ public class ServerEntity extends NamedEntity{
         this.description = description;
     }
 
-    public GameEntity getGameEntity() {
-        return gameEntity;
+    public Game getGame() {
+        return game;
     }
 
     /**
-     * @throws NullPointerException if {@code gameEntity} is null
-     * @param gameEntity
+     * @throws NullPointerException if {@code game} is null
+     * @param game
      */
-    public void setGameEntity(GameEntity gameEntity) {
+    public void setGame(Game game) {
         Objects.requireNonNull(setOfServerTypes, "Game can not be null. Server can't exist without game");
-        this.gameEntity = gameEntity;
+        this.game = game;
     }
 
     @Override
     public String toString() {
-        return "ServerEntity{" +
+        return "Server{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", setOfServerTypes=" + setOfServerTypes +
-                ", gameEntity=" + gameEntity +
+                ", game=" + game +
                 '}';
     }
 }
